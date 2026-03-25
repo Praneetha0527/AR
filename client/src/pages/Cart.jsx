@@ -10,12 +10,12 @@ const Cart = () => {
     const handlePayment = async () => {
         try {
             // 1. Get Razorpay Key from backend
-            const { keyId } = await fetch("http://localhost:5000/api/config/razorpay").then((t) =>
+            const { keyId } = await fetch("https://bharani-silks-api.onrender.com/api/config/razorpay").then((t) =>
                 t.json()
             );
 
             // 2. Create Razorpay order
-            const orderRes = await fetch("http://localhost:5000/api/orders/create-razorpay-order", {
+            const orderRes = await fetch("https://bharani-silks-api.onrender.com/api/orders/create-razorpay-order", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ amount: total }),
@@ -33,7 +33,7 @@ const Cart = () => {
                 handler: async function (response) {
                     try {
                         // 4. Verify payment on success
-                        const verifyRes = await fetch("http://localhost:5000/api/orders/verify-payment", {
+                        const verifyRes = await fetch("https://bharani-silks-api.onrender.com/api/orders/verify-payment", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
@@ -49,7 +49,7 @@ const Cart = () => {
                         if (data.msg === "success") {
                             // Normally we get the user ID from Auth context, let's assume a placeholder for now since auth might not be fully wired:
                             const userId = "64c9f1b5b4e4c2b9b8b9b8b9"; // Replace with actual user ID
-                            await fetch("http://localhost:5000/api/orders", {
+                            await fetch("https://bharani-silks-api.onrender.com/api/orders", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
